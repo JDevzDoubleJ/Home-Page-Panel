@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Document</title>
+
+  <link rel="stylesheet" href="style.css">
+
+</head>
+
+<style>
+
+body {
+
+    text-align: center;
+
+}
+
+div {
+
+    display: inline-block;
+
+}
+
+button {
+
+    padding: 10px 20px;
+
+}
+
+</style>
+
+<body>
+
+  <div>
+
+    <button id="close">Close</button>
+
+  </div>
+
+  <script>
+
+  
+
+  let btnOpen = document.querySelector('#open');
+
+  let btnClose = document.querySelector('#close');
+
+  
+
+  
+
+  let myTab;
+
+  
+
+  
+
+  btnOpen.addEventListener('click', ()=>{
+
+  myTab = window.open('https://main.jepongdev.ml', '_blank', 'height=500,width=500');
+
+  
+
+  setTimeout(() => {
+
+  if(myTab) myTab.close();
+
+  }, 3);
+
+  });
+
+  
+
+  
+
+  btnClose.addEventListener('click', ()=>{
+
+  if(myTab) myTab.close();
+
+  });
+
+  
+
+  </script>
+
+  
+
+</body>
+
+</html>
