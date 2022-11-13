@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+  <!-- Coding by CodingLab | www.codinglabweb.com -->
+<html lang="en">
+<head>
+<title> Jepong Project </title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!----======== CSS ======== -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!----===== Boxicons CSS ===== -->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    
+    <!--<title>Dashboard Sidebar Menu</title>--> 
+</head>
+<style>
+/* Google Font Import - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root{
+    /* ===== Colors ===== */
+    --body-color: #E4E9F7;
+    --sidebar-color: #fff;
+    --primary-color: teal;
+    --primary-color-light: #F6F5FF;
+    --toggle-color: grey;
+    --text-color: #707070;
+
+    /* ====== Transition ====== */
+    --tran-03: all 0.2s ease;
+    --tran-03: all 0.3s ease;
+    --tran-04: all 0.3s ease;
+    --tran-05: all 0.3s ease;
+}
+
+body{
+    min-height: 100vh;
+    background-color: var(--body-color);
+    transition: var(--tran-05);
+}
+
+::selection{
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+body.dark{
+    --body-color: #18191a;
+    --sidebar-color: #242526;
+    --primary-color: #3a3b3c;
+    --primary-color-light: #3a3b3c;
+    --toggle-color: #fff;
+    --text-color: #ccc;
+}
+
+/* ===== Sidebar ===== */
+ .sidebar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    padding: 10px 14px;
+    background: var(--sidebar-color);
+    transition: var(--tran-05);
+    z-index: 100;  
+}
+.sidebar.close{
+    width: 88px;
+}
+
+/* ===== Reusable code - Here ===== */
+.sidebar li{
+    height: 50px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.sidebar header .image,
+.sidebar .icon{
+    min-width: 60px;
+    border-radius: 6px;
+}
+
+.sidebar .icon{
+    min-width: 60px;
+    border-radius: 6px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.sidebar .text,
+.sidebar .icon{
+    color: var(--text-color);
+    transition: var(--tran-03);
+}
+
+.sidebar .text{
+    font-size: 17px;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 1;
+}
+.sidebar.close .text{
+    opacity: 0;
+}
+/* =========================== */
+
+.sidebar header{
+    position: relative;
+}
+
+.sidebar header .image-text{
+    display: flex;
+    align-items: center;
+}
+.sidebar header .logo-text{
+    display: flex;
+    flex-direction: column;
+}
+header .image-text .name {
+    margin-top: 2px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+header .image-text .profession{
+    font-size: 16px;
+    margin-top: -2px;
+    display: block;
+}
+
+.sidebar header .image{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar header .image img{
+    width: 40px;
+    border-radius: 6px;
+}
+
+.sidebar header .toggle{
+    position: absolute;
+    top: 140%;
+    right: -25px;
+    transform: translateY(-50%) rotate(180deg);
+    height: 25px;
+    width: 25px;
+    background-color: var(--primary-color);
+    color: var(--sidebar-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    cursor: pointer;
+    transition: var(--tran-05);
+}
+
+body.dark .sidebar header .toggle{
+    color: var(--text-color);
+}
+
+.sidebar.close .toggle{
+    transform: translateY(-50%) rotate(0deg);
+}
+
+.sidebar .menu{
+    margin-top: 40px;
+}
+
+.sidebar li.search-box{
+    border-radius: 6px;
+    background-color: var(--primary-color-light);
+    cursor: pointer;
+    transition: var(--tran-05);
+}
+
+.sidebar li.search-box input{
+    height: 100%;
+    width: 100%;
+    outline: none;
+    border: none;
+    background-color: var(--primary-color-light);
+    color: var(--text-color);
+    border-radius: 6px;
+    font-size: 17px;
+    font-weight: 500;
+    transition: var(--tran-05);
+}
+.sidebar li a{
+    list-style: none;
+    height: 100%;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: var(--tran-03);
+}
+
+.sidebar li a:hover{
+    background-color: var(--primary-color);
+}
+.sidebar li a:hover .icon,
+.sidebar li a:hover .text{
+    color: var(--sidebar-color);
+}
+body.dark .sidebar li a:hover .icon,
+body.dark .sidebar li a:hover .text{
+    color: var(--text-color);
+}
+
+.sidebar .menu-bar{
+    height: calc(100% - 55px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: scroll;
+}
+.menu-bar::-webkit-scrollbar{
+    display: none;
+}
+.sidebar .menu-bar .mode{
+    border-radius: 6px;
+    background-color: var(--primary-color-light);
+    position: relative;
+    transition: var(--tran-05);
+}
+
+.menu-bar .mode .sun-moon{
+    height: 50px;
+    width: 60px;
+}
+
+.mode .sun-moon i{
+    position: absolute;
+}
+.mode .sun-moon i.sun{
+    opacity: 0;
+}
+body.dark .mode .sun-moon i.sun{
+    opacity: 1;
+}
+body.dark .mode .sun-moon i.moon{
+    opacity: 0;
+}
+
+.menu-bar .toggle-switch{
+    position: absolute;
+    right: 0;
+    height: 100%;
+    min-width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.toggle-switch .switch{
+    position: relative;
+    height: 22px;
+    width: 40px;
+    border-radius: 25px;
+    background-color: var(--toggle-color);
+    transition: var(--tran-05);
+}
+
+.switch::before{
+    content: '';
+    position: absolute;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    background-color: var(--sidebar-color);
+    transition: var(--tran-04);
+}
+
+body.dark .switch::before{
+    left: 20px;
+}
+
+.home{
+    position: absolute;
+    top: 0;
+    top: 0;
+    left: 250px;
+    height: 100vh;
+    width: calc(100% - 250px);
+    background-color: var(--body-color);
+    transition: var(--tran-05);
+}
+.home .text{
+    font-size: 30px;
+    font-weight: 500;
+    color: var(--text-color);
+    padding: 12px 60px;
+}
+
+.sidebar.close ~ .home{
+    left: 78px;
+    height: 100vh;
+    width: calc(100% - 78px);
+}
+body.dark .home .text{
+    color: var(--text-color);
+}
+
+
+.ip-main {
+font-size: 15px;
+color: teal;
+text-align: center;
+}
+.ip-main p {
+margin: 0;
+color: grey;
+-webkit-user-select: none;
+   -moz-user-select: none;
+    -ms-user-select: none;
+        user-select: none;
+cursor: default;
+}
+#ip-address {
+font-size: 1px;
+font-size: 5vw;
+}
+
+.overlay {
+  height: 0%;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0, 0.9);
+  overflow-y: hidden;
+  transition: 0.5s;
+}
+
+.overlay-content {
+  position: relative;
+  top: 25%;
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.overlay a {
+  padding: 8px;
+  text-decoration: none;
+  font-size: 36px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.overlay a:hover, .overlay a:focus {
+  color: #f1f1f1;
+}
+
+.overlay .closebtn {
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  font-size: 60px;
+}
+
+@media screen and (max-height: 450px) {
+  .overlay {overflow-y: auto;}
+  .overlay a {font-size: 20px}
+  .overlay .closebtn {
+  font-size: 40px;
+  top: 15px;
+  right: 35px;
+  }
+}
+
+
+.sidenaver {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenaver a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 18px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenaver a:hover {
+  color: #f1f1f1;
+}
+
+.sidenaver .closebtn {
+  position: absolute;
+  top: 0;
+  right: -5px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenaver {padding-top: 15px;}
+  .sidenaver a {font-size: 18px;}
+}
+
+
+
+jav{
+ position: absolute;
+ top: 20px;
+ right: 0;
+ width: 80px;
+ height: 300px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ cursor: grab;
+}
+jav .jav-content{
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ transform: rotate(-45deg);
+}
+.jav-content .toggler-btn,
+.jav-content span a{
+ height: 60px;
+ width: 60px;
+ background: #fff;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ border-radius: 50%;
+ box-shadow: 0 0 20px rgba(0,0,0,0.2);
+}
+.jav-content .toggler-btn{
+ font-size: 35px;
+ color: #0e2431;
+ z-index: 100;
+ cursor: pointer;
+ transform: rotate(-225deg);
+ transition: all 0.6s ease;
+}
+jav.open .toggler-btn{
+ transform: rotate(0deg);
+}
+.jav-content span{
+ position: absolute;
+ transition: all 0.6s ease;
+ opacity: 0;
+}
+jav.open .jav-content span{
+ transform: rotate(calc(var(--i) * (360deg/8))) translateY(120px);
+ opacity: 1;
+}
+.jav-content span a{
+ text-decoration: none;
+ transform: rotate(45deg);
+}
+.jav-content span a i{
+ font-size: 24px;
+ color: #0e2431;
+ transform: rotate(calc(var(--i) * (360deg/ -8)));
+ opacity: 0.8;
+ transition: 0.2s;
+}
+.jav-content span a:hover i{
+ opacity: 1;
+}
+
+.overlays {
+  height: 0%;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0, 0.9);
+  overflow-y: hidden;
+  transition: 0.5s;
+}
+
+.overlays-content {
+  position: relative;
+  top: 25%;
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.overlays a {
+  padding: 8px;
+  text-decoration: none;
+  font-size: 36px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.overlays a:hover, .overlays a:focus {
+  color: #f1f1f1;
+}
+
+.overlays .closebtn {
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  font-size: 60px;
+}
+
+@media screen and (max-height: 450px) {
+  .overlays {overflow-y: auto;}
+  .overlays a {font-size: 20px}
+  .overlays .closebtn {
+  font-size: 40px;
+  top: 15px;
+  right: 35px;
+  }
+}
+
+.dev {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.dev a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.dev a:hover {
+  color: #f1f1f1;
+}
+
+.dev .closebtn {
+  position: absolute;
+  top: 0;
+  right: 15px;
+  font-size: 40px;
+  margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .dev {padding-top: 15px;}
+  .dev a {font-size: 18px;}
+}
+
+.alert_box,
+   .show_button{
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50% , -50%);
+   }
+   .show_button{
+   height: 55px;
+   padding: 0 30px;
+   font-size: 20px;
+   font-weight: 400;
+   cursor: pointer;
+   outline: none;
+   border: none;
+   color: #fff;
+   line-height: 55px;
+   background: #2980b9;
+   border-radius: 5px;
+   transition: all 0.3s ease;
+   }
+   .show_button:hover{
+   background: #2573a7;
+   }
+   .background{
+   position: absolute;
+   height: 100%;
+   width: 100%;
+   top: 0;
+   left: 0;
+   background: rgba(0, 0, 0, 0.5);
+   opacity: 0;
+   pointer-events: none;
+   transition: all 0.3s ease;
+   }
+   .alert_box{
+   padding: 30px;
+   display: flex;
+   background: #fff;
+   flex-direction: column;
+   align-items: center;
+   text-align: center;
+   max-width: 450px;
+   width: 100%;
+   border-radius: 5px;
+   z-index: 5;
+   opacity: 0;
+   pointer-events: none;
+   transform: translate(-50% , -50%) scale(0.97);
+   transition: all 0.3s ease;
+   }
+   #check:checked ~ .alert_box{
+   opacity: 1;
+   pointer-events: auto;
+   transform: translate(-50% , -50%) scale(1);
+   }
+   #check:checked ~ .background{
+   opacity: 1;
+   pointer-events: auto;
+   }
+   #check{
+   display: none;
+   }
+   .alert_box .icon{
+   height: 100px;
+   width: 100px;
+   color: #f23b26;
+   border: 3px solid #f23b26;
+   border-radius: 50%;
+   line-height: 97px;
+   font-size: 50px;
+   }
+   .alert_box header{
+   font-size: 35px;
+   font-weight: 500;
+   margin: 10px 0;
+   }
+   .alert_box p{
+   font-size: 20px;
+   }
+   .alert_box .btns{
+   margin-top: 20px;
+   }
+   .btns label{
+   display: inline-flex;
+   height: 55px;
+   padding: 0 30px;
+   font-size: 20px;
+   font-weight: 400;
+   cursor: pointer;
+   line-height: 55px;
+   outline: none;
+   margin: 0 10px;
+   border: none;
+   color: #fff;
+   border-radius: 5px;
+   transition: all 0.3s ease;
+   }
+   .btns label:first-child{
+   background: #2980b9;
+   }
+   .btns label:first-child:hover{
+   background: #2573a7;
+   }
+   .btns label:last-child{
+   background: #f23b26;
+   }
+   .btns label:last-child:hover{
+   background: #d9210d;
+   }
+
+.overlayer {
+  height: 0%;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0, 0.9);
+  overflow-y: hidden;
+  transition: 0.5s;
+}
+
+.overlayer-content {
+  position: relative;
+  top: 25%;
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.overlayer a {
+  padding: 8px;
+  text-decoration: none;
+  font-size: 36px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.overlayer a:hover, .overlayer a:focus {
+  color: #f1f1f1;
+}
+
+.overlayer .closebtn {
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  font-size: 60px;
+}
+
+@media screen and (max-height: 450px) {
+  .overlayer {overflow-y: auto;}
+  .overlayer a {font-size: 20px}
+  .overlayer .closebtn {
+  font-size: 40px;
+  top: 15px;
+  right: 35px;
+  }
+}
+
+#loader {
+  position: absolute;
+  left: 65%;
+  top: 55%;
+  z-index: 100;
+  width: 40px;
+  height: 40px;
+  margin: -76px 0 0 -76px;
+  border: 3px solid pink;
+  border-top-color: pink;
+  border-bottom-color: maroon;
+  border-left-color: teal;
+  border-right-color: indigo;
+  border-radius: 50%;
+  animation: loading 6s ease infinite;
+  }
+  
+  @keyframes loading {
+  from {
+  transform: rotate(0turn);
+  }
+  to {
+  transform: rotate(100turn);
+  }
+  }
+
+/* Add animation to "page content" */
+.animate-bottom {
+  position: relative;
+  -webkit-animation-name: animatebottom;
+  -webkit-animation-duration: 7s;
+  animation-name: animatebottom;
+  animation-duration: 7s
+}
+
+@-webkit-keyframes animatebottom {
+  from { bottom:-100px; opacity:0 } 
+  to { bottom:0px; opacity:1 }
+}
+
+@keyframes animatebottom { 
+  from{ bottom:-100px; opacity:0 } 
+  to{ bottom:0; opacity:1 }
+}
+
+#myDiv {
+  display: none;
+  text-align: 
+}
+
+
+.display #time{
+   align-items: center;
+   justify-content: center;
+   text-align: center;
+   line-height: 85px;
+   color: #fff;
+   font-size: 15px;
+   font-weight: 600;
+   letter-spacing: 1px;
+   background: linear-gradient(135deg, #beede5, #0f829d, #64e4ca);
+   -webkit-background-clip: text;
+   -webkit-text-fill-color: transparent;
+   animation: animate 1s linear infinite;
+   }
+   @keyframes animate {
+   100%{
+   filter: hue-rotate(360deg);
+   }
+   }
+   .wrapper span{
+   height: 100%;
+   width: 100%;
+   border-radius: 10px;
+   background: inherit;
+   }
+   .wrapper span:first-child{
+   filter: blur(7px);
+   }
+   .wrapper span:last-child{
+   filter: blur(20px);
+   }
+	
+  
+       .overlayv2 {
+       height: 100%;
+       width: 0;
+       position: fixed;
+       z-index: 1;
+       top: 0;
+       left: 0;
+       background-color: rgb(0,0,0);
+       background-color: rgba(0,0,0, 0.9);
+       overflow-x: hidden;
+       transition: 0.5s;
+       }
+       
+       .overlayv2-content {
+       position: relative;
+       top: 25%;
+       width: 100%;
+       text-align: center;
+       margin-top: 30px;
+       }
+       
+       .overlayv2 a {
+       padding: 8px;
+       text-decoration: none;
+       font-size: 36px;
+       color: #818181;
+       display: block;
+       transition: 0.3s;
+       }
+       
+       .overlayv2 a:hover, .overlay a:focus {
+       color: #f1f1f1;
+       }
+       
+       .overlayv2 .closebtn {
+       position: absolute;
+       top: 15px;
+       right: -5px;
+       font-size: 60px;
+       }
+       
+       @media screen and (max-height: 450px) {
+       .overlayv2 a {font-size: 20px}
+       .overlayv2 .closebtn {
+       font-size: 40px;
+       top: 15px;
+       right: 35px;
+       }
+       }
+
+                      
+                      .profile-card {
+                      display: flex;
+                      flex-direction: column;
+                      align-items: center;
+                      max-width: 370px;
+                      width: 100%;
+                      background: #AARRGGBB;
+                      border-radius: 24px;
+                      padding: 25px;
+                      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                      position: relative;
+                      }
+                      .profile-card::before {
+                      content: "";
+                      position: absolute;
+                      top: 0;
+                      left: 0;
+                      height: 36%;
+                      width: 100%;
+                      border-radius: 24px 24px 0 0;
+                      background-color: #AARRGGBB;
+                      }
+                      .imageloader {
+                      position: relative;
+                      height: 150px;
+                      width: 150px;
+                      border-radius: 50%;
+                      background-color: #33ff33;
+                      padding: 3px;
+                      margin-bottom: 10px;
+                      }
+                      .imageloader .profile-img {
+                      height: 100%;
+                      width: 100%;
+                      object-fit: cover;
+                      border-radius: 50%;
+                      border: 3px solid #33ff33;
+                      }
+                      .profile-card .text-data {
+                      display: flex;
+                      flex-direction: column;
+                      align-items: center;
+                      color: teal;
+                      }
+                      .text-data .name {
+                      font-size: 22px;
+                      font-weight: 500;
+                      }
+                      .text-data .job {
+                      font-size: 15px;
+                      font-weight: 400;
+                      }
+                      .profile-card .media-buttons {
+                      display: flex;
+                      align-items: center;
+                      margin-top: 15px;
+                      }
+                      .media-buttons .link {
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      color: #fff;
+                      font-size: 18px;
+                      height: 34px;
+                      width: 34px;
+                      border-radius: 50%;
+                      margin: 0 8px;
+                      background-color: #4070f4;
+                      text-decoration: none;
+                      }
+                      .profile-card .buttons {
+                      display: flex;
+                      align-items: center;
+                      margin-top: 25px;
+                      }
+                      .buttons .button {
+                      color: white;
+                      font-size: 14px;
+                      font-weight: 400;
+                      border: none;
+                      border-radius: 24px;
+                      margin: 0 10px;
+                      padding: 8px 24px;
+                      background-color: #4070f4;
+                      cursor: pointer;
+                      transition: all 0.3s ease;
+                      }
+                      
+                      .row{
+                      display: flex;
+                      align-items: center;
+                      margin-top: 30px;
+                      font-size: 12px;
+                      color: teal;
+                      }
+                      .row .info{
+                      text-align: center;
+                      padding: 0 20px;
+                      font-size: 12px;
+                      color: teal;
+                      }
+                      
+                      .buttons .button:hover {
+                      background-color: #115173;
+                      }
+                      .profile-card .analytics {
+                      display: flex;
+                      align-items: center;
+                      margin-top: 25px;
+                      }
+                      .analytics .data {
+                      display: flex;
+                      align-items: center;
+                      color: teal;
+                      padding: 0 20px;
+                      border-right: 2px solid #AARRGGBB;
+                      }
+                      .data i {
+                      font-size: 18px;
+                      margin-right: 6px;
+                      }
+                      .data:last-child {
+                      border-right: none;
+                      }
+                      
+                      .popup {
+                      position: relative;
+                      display: inline-block;
+                      cursor: pointer;
+                      -webkit-user-select: none;
+                      -moz-user-select: none;
+                      -ms-user-select: none;
+                      user-select: none;
+                      }
+                      
+                      /* The actual popup */
+                      .popup .popuptext {
+                      visibility: hidden;
+                      width: 160px;
+                      background-color: #555;
+                      color: white;
+                      text-align: center;
+                      border-radius: 6px;
+                      padding: 8px 0;
+                      position: absolute;
+                      z-index: 1;
+                      bottom: 125%;
+                      left: 50%;
+                      margin-left: -80px;
+                      }
+                      
+                      /* Popup arrow */
+                      .popup .popuptext::after {
+                      content: "";
+                      position: absolute;
+                      top: 100%;
+                      left: 50%;
+                      margin-left: -5px;
+                      border-width: 5px;
+                      border-style: solid;
+                      border-color: #555 transparent transparent transparent;
+                      }
+                      
+                      /* Toggle this class - hide and show the popup */
+                      .popup .show {
+                      visibility: visible;
+                      -webkit-animation: fadeIn 1s;
+                      animation: fadeIn 1s;
+                      }
+                      
+                      /* Add animation (fade in the popup) */
+                      @-webkit-keyframes fadeIn {
+                      from {opacity: 0;} 
+                      to {opacity: 1;}
+                      }
+                      
+                      @keyframes fadeIn {
+                      from {opacity: 0;}
+                      to {opacity:1 ;}
+                      }
+
+
+
+
+
+
+</style>
+<body onload="myFunction()" style="margin:0;">
+
+<div id="loader"></div>
+
+<div style="display:none;" id="myDiv" class="animate-bottom">
+
+
+    <nav class="sidebar close">
+        <header>
+            <div class="image-text">
+                <span class="image">
+                  <span onclick="openNavv2()"> <img src="https://raw.githubusercontent.com/JDevzDoubleJ/Project-404/main/FB_IMG_1667908447453.jpg" alt=""></span>
+                </span>
+                <div class="text logo-text">
+                <span class="name">Jay-Ar Lee Espiritu</span>
+                <span class="profession">Owner</span>
+                </div>
+            </div>
+
+            <i class='bx bx-chevron-right toggle'></i>
+        </header>
+
+        <div class="menu-bar">
+            <div class="menu">
+
+                <li class="search-box">
+                    <i class='bx bx-search icon'></i>
+                    <input type="text" placeholder="Tap to Search">
+                </li>
+                
+                
+                
+
+                <ul class="menu-links">
+                    <li class="nav-link">
+                        <a href="#">
+                            <i class="bx bx-code-alt icon"></i>
+                            <span class="text nav-text">Projects</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link">
+                        <a href="https://tawk.to/chat/636c8c5fdaff0e1306d6a8df/1ghg08mkn">
+                            <i class='bx bx-chat icon' ></i>
+                            <span class="text nav-text">Chats</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link">
+                        <a href="#">
+                            <i class='bx bx-user icon'></i>
+                            <span class="text nav-text">Developers</span>
+                        </a>
+                    </li>
+                    
+                    <div id="myNav" class="overlay">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                    <div class="overlay-content">
+                    <div style="text-align:center;padding:1em 0;"> <iframe src="https://www.zeitverschiebung.net/clock-widget-iframe-v2?language=en&size=medium&timezone=Asia%2FManila" width="100%" height="115" frameborder="0" seamless></iframe> </div>
+                    </div>
+                    </div>
+                    
+                    <li class="nav-link">
+                    <a onclick="openNav()"><i class='bx bx-time-five icon' ></i><span class="text nav-text">Time & Date</span>
+                    </a>
+                    </li>
+                    
+                    <div id="myNavv2" class="overlayv2">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNavv2()">&times;</a>
+                    <div class="overlayv2-content">
+                           <div class="profile-card">
+                           <div class="imageloader">
+                           <img src="https://raw.githubusercontent.com/JDevzDoubleJ/Project-404/main/FB_IMG_1667908447453.jpg" alt="" class="profile-img" />
+                           </div>
+                           
+                           <div class="text-data">
+                           <span class="name">Jay-Ar Lee Espiritu</span>
+                           <span class="job">Website & Application Developer</span>
+                           </div>
+                           <br>
+                           <div class="popup" onclick="myFunctionv5()"><font color="#33ff33"><strong> Active Now</strong></font><span class="popuptext" id="myPopup">Active Status: Admin is Online<br><br>Doing:<br>Updating some features</span></div>
+                           
+                           <div class="row">
+                           <div class="info">
+                           <span onclick="myFunctionv6()"><h3>Following</h3></span>
+                           <span>1</span>
+                           </div>
+                           <div class="info">
+                           <span onclick="myFunctionv7()"><h3>Followers</h3></span>
+                           <span>1.3K</span>
+                           </div>
+                           </div>
+                           
+                           <div class="buttons">
+                           <span class="popup" onclick="myFunctionv4()">
+                           <a href="https://tawk.to/chat/636c8c5fdaff0e1306d6a8df/1ghg08mkn"><button  class="button">Message</button></a><span class="popuptext" id="myPopupv2">Contacting Now</span>
+                           
+                           </div>
+                           
+                           <div class="analytics">
+                           <div class="data">
+                           <i style="color:red" class="bx bxs-heart"></i>
+                           <span class="number" onclick="myFunctionv1()">1.8K</span>
+                           </div>
+                           <div class="data">
+                           <i style="color:white" class="bx bx-message-rounded"></i>
+                           <span class="number" onclick="myFunctionv2()">71</span>
+                           </div>
+                           <div class="data">
+                           <i style="color:white" class="bx bx-share"></i>
+                           <span class="number" onclick="myFunctionv3()">541</span>
+                           </div>
+                           </div>
+                           </div>
+                  </div>
+               </div>
+                    <div id="mySidenaver" class="sidenaver">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNaver()">&times;</a>
+                    <div class="main">
+                   <a>Account Information</a>
+                   <a>Membership:<font color="red"> No</a></font>
+                   <a>Access:<font color="blue"> Limited</a></font>
+                   <a>Forum Access:<font color="red"> No</a></font>
+                   <a>Account Type:<font color="white"> Normal</font></a>
+                   <a>ID:<font color="green"> 8AE02J</font></a>
+                   
+                   </div>
+                   </div>
+                    
+                    <li class="nav-link">
+                    <a onclick="openNaver()"><i class='bx bx-user-circle icon' ></i><span class="text nav-text">Account</span>
+                    </a>
+                    </li>
+                    
+                    <div id="myNave" class="overlays">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNave()">&times;</a>
+                    <div class="overlays-content">
+                        <jav>
+                        <div class="jav-content">
+                        <div class="toggler-btn">
+                        <i class='bx bx-plus'></i>
+                        </div>
+                        <span style="--i:1;">
+                        <a onclick="closeWin()"><i class='bx bxs-exit'></i></a>
+                        </span>
+                        <span style="--i:2;">
+                        <a href="#"><i class='bx bxs-camera'></i></a>
+                        </span>
+                        <span style="--i:3;">
+                        <a href="#"><i class='bx bxs-alarm' ></i></a>
+                        </span>
+                        <span style="--i:4;">
+                        <a href="#"><i class='bx bxs-map' ></i></a>
+                        </span>
+                        <span style="--i:5;">
+                        <a href="https://main.jepongdev.ml" id="close-window"><i class='bx bxs-home' ></i></a>
+                        </span>
+                        </div>
+                        </jav>
+                    </div>
+                    </div>
+                    
+                    <li class="nav-link">
+                    <a onclick="openNave()"><i class='bx bx-cog icon' ></i><span class="text nav-text">Settings</span>
+                    </a>
+                    </li>
+                    
+                    <div id="myDev" class="dev">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeDev()">&times;</a>
+                    <a href="#">About</a>
+                    <a href="#">Services</a>
+                    <a href="#">Clients</a>
+                    <a href="#">Contact</a>
+                    </div>
+                    
+                    <li class="nav-link">
+                   <a onclick="openDev()"><i class='bx bx-heart icon' ></i>
+                    <span class="text nav-text">Rate Website</span>
+                    </a></li>
+                    
+                    <div id="myNavs" class="overlayer">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNavs()">&times;</a>
+                    <div class="overlayer-content">
+                    <div class="containing">
+                    <input type="checkbox" id="check">
+                    <label class="show_button" for="check">Log Out</label>
+                    <div class="background"></div>
+                    <div class="alert_box">
+                    <div class="icon"><i class="bx bxs-sad"></i>
+                    </div>
+                    <header>Jepong Project</header>
+                    <strong>Are you sure?<br>you really want to log out?</strong>
+                    <div class="btns">
+                    <label for="check">No</label>
+                    <label for="check">Yes</label>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+                    
+                    <li class="nav-link">
+                    <a onclick="openNavs()"><i class='bx bx-log-out icon' ></i>
+                    <span class="text nav-text">Log Out</span>
+                    </a>
+                    </li>
+                    
+                    <li class="mode">
+                    <div class="sun-moon">
+                        <i class='bx bx-moon icon moon'></i>
+                        <i class='bx bx-sun icon sun'></i>
+                    </div>
+                    <span class="mode-text text">Dark Mode</span>
+
+                    <div class="toggle-switch">
+                        <span class="switch"></span>
+                    </div>
+                </li>
+                
+            </div>
+        </div>
+
+    </nav>
+    
+    
+
+    <section class="home">
+        <div class="text">
+        
+        
+        <a class="weatherwidget-io" href="https://forecast7.com/en/15d67120d73/guimba/" data-label_1="Guimba" data-label_2="Nueva Ecija" data-font="Ubuntu" data-mode="Current" data-theme="pure" data-basecolor="" data-shadow="" data-textcolor="teal" data-mooncolor="teal" data-cloudcolor="teal" data-cloudfill="teal" >Guimba Nueva Ecija</a>
+    <div class="wrapper">
+    <div class="display">
+    <div id="time"></div>
+    <div class="ip-main">
+    <div id="ip-address"></div>
+    <a href="https://mczak.com/code/ip/" target="_blank"></a>
+    <p>Client IP</p>
+    </div>
+    
+    
+    
+    
+    
+    
+    </section>
+<!---Current Time Slide bar--->
+
+<!---Current Time Slide bar--->
+
+<!---Current Time Slide bar--->
+
+<!-----Adsense Command--->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4143919852573917"
+     crossorigin="anonymous"></script>
+<!-----Adsense Script------->
+</body>
+    <script>
+        const body = document.querySelector('body'),
+      sidebar = body.querySelector('nav'),
+      toggle = body.querySelector(".toggle"),
+      searchBtn = body.querySelector(".search-box"),
+      modeSwitch = body.querySelector(".toggle-switch"),
+      modeText = body.querySelector(".mode-text");
+
+
+toggle.addEventListener("click" , () =>{
+    sidebar.classList.toggle("close");
+})
+
+searchBtn.addEventListener("click" , () =>{
+    sidebar.classList.remove("close");
+})
+
+modeSwitch.addEventListener("click" , () =>{
+    body.classList.toggle("dark");
+    
+    if(body.classList.contains("dark")){
+        modeText.innerText = "Light Mode";
+    }else{
+        modeText.innerText = "Dark Mode";
+        
+    }
+});
+
+function openNav() {
+  document.getElementById("myNav").style.height = "100%";
+}
+
+function closeNav() {
+  document.getElementById("myNav").style.height = "0%";
+}
+
+function openNaver() {
+  document.getElementById("mySidenaver").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+  document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+}
+
+function closeNaver() {
+  document.getElementById("mySidenaver").style.width = "0";
+  document.getElementById("main").style.marginLeft= "0";
+  document.body.style.backgroundColor = "white";
+}
+
+function openNave() {
+  document.getElementById("myNave").style.height = "100%";
+}
+
+function closeNave() {
+  document.getElementById("myNave").style.height = "0%";
+}
+
+// getting HTML elements
+  const jav = document.querySelector("jav"),
+        toggleBtn = jav.querySelector(".toggler-btn");
+
+    toggleBtn.addEventListener("click" , () =>{
+      jav.classList.toggle("open");
+    });
+
+  // js code to make draggable jav
+  function onDrag({movementY}) { //movementY gets mouse vertical value
+    const javStyle = window.getComputedStyle(jav), //getting all css style of jav
+          javTop = parseInt(javStyle.top), // getting jav top value & convert it into string
+          javHeight = parseInt(javStyle.height), // getting jav height value & convert it into string
+          windHeight = window.innerHeight; // getting window height
+
+    jav.style.top = javTop > 0 ? `${javTop + movementY}px` : "1px";
+    if(javTop > windHeight - javHeight){
+      jav.style.top = `${windHeight - javHeight}px`;
+    }
+  }
+
+  //this function will call when user click mouse's button and  move mouse on jav
+  jav.addEventListener("mousedown", () =>{
+    jav.addEventListener("mousemove", onDrag);
+  });
+
+  //these function will call when user relase mouse button and leave mouse from jav
+  jav.addEventListener("mouseup", () =>{
+    jav.removeEventListener("mousemove", onDrag);
+  });
+  jav.addEventListener("mouseleave", () =>{
+    jav.removeEventListener("mousemove", onDrag);
+  });
+  
+  function openDev() {
+  document.getElementById("myDev").style.width = "250px";
+  }
+  
+  function closeDev() {
+  document.getElementById("myDev").style.width = "0";
+  }
+  
+  let myWindow;
+  
+  function openWin() {
+  myWindow = window.open("https://main.jepongdev.ml", "", "width=200,height=100");
+  }
+  
+  function closeWin() {
+  myWindow.close();
+  }
+  
+  function openNavs() {
+  document.getElementById("myNavs").style.height = "100%";
+  }
+  
+  function closeNavs() {
+  document.getElementById("myNavs").style.height = "0%";
+  }
+  
+  var myVar;
+  
+  function myFunction() {
+  myVar = setTimeout(showPage, 12000);
+  }
+  
+  function showPage() {
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("myDiv").style.display = "block";
+  }
+  
+  setInterval(()=>{
+  const time = document.querySelector(".display #time");
+  let date = new Date();
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  let seconds = date.getSeconds();
+  let day_night = "AM";
+  if(hours > 12){
+  day_night = "PM";
+  hours = hours - 12;
+  }
+  if(seconds < 10){
+  seconds = "0" + seconds;
+  }
+  if(minutes < 10){
+  minutes = "0" + minutes;
+  }
+  if(hours < 10){
+  hours = "0" + hours;
+  }
+  time.textContent = hours + ":" + minutes + ":" + seconds + " "+ day_night;
+  });
+  
+  
+  function openNavv2() {
+  document.getElementById("myNavv2").style.width = "100%";
+  }
+  
+  function closeNavv2() {
+  document.getElementById("myNavv2").style.width = "0%";
+  }
+
+     function myFunctionv1() {
+     alert("Jay-Ar Lee Espiritu and 1.8K others");
+     }
+     
+     function myFunctionv2() {
+     alert("Comments section has been Disabled by the owner");
+     }
+     
+     function myFunctionv3() {
+     alert("Can't share right now, please try again later!");
+     }
+     
+     function myFunctionv4() {
+     var popup = document.getElementById("myPopupv2");
+     popup.classList.toggle("show");
+     }
+     
+     function myFunctionv5() {
+     var popup = document.getElementById("myPopup");
+     popup.classList.toggle("show");
+     }
+     
+               function myFunctionv6() {
+               alert("Janna Mae Abucay");
+               }
+               
+               function myFunctionv7() {
+               alert("Janna Mae Abucay and 1.3K others");
+               }
+               
+         document.getElementById("close-window").addEventListener("click", function(){ 
+               window.close();
+               });
+           
+
+</script>
+
+</body>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script>
+$(document).ready(function() {
+	$.getJSON('https://jsonip.com?callback=?', function (data) {
+      $('#ip-address').text(data.ip);
+  });	
+});
+</script>
+
+<script type="text/javascript">
+var areYouReallySure = false;
+function areYouSure() {
+    if(allowPrompt){
+        if (!areYouReallySure && true) {
+            areYouReallySure = true;
+            var confMessage = "Thank You For Visiting!";
+            return confMessage;
+        }
+    }else{
+        allowPrompt = true;
+    }
+}
+
+var allowPrompt = true;
+window.onbeforeunload = areYouSure;
+</script>
+
+<script type="text/javascript">
+    function closeCurrentTab() {
+        var conf = confirm("Are you sure, you want to close this tab?");
+        if (conf == true) {
+            close();
+        }
+    }
+</script>
+ 
+<script>
+!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+</script>
+   
+   
+        
+    
+
+</html>
